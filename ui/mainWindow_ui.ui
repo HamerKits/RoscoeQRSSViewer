@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>903</width>
+    <height>637</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>&quot;Roscoe QRSS Viewer</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,1">
+        <item>
+         <widget class="QProgressBar" name="pvSignal">
+          <property name="maximumSize">
+           <size>
+            <width>10</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="maximum">
+           <number>255</number>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+          <property name="textVisible">
+           <bool>false</bool>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_9">
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Center Frequency (Hz)</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="margin">
+               <number>4</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="txtCenterFrequency">
+              <property name="inputMethodHints">
+               <set>Qt::ImhNone</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>Frequency Span (Hz)</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="margin">
+               <number>4</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="txtFrequencySpan"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>Display Offset (Hz)</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="txtOffset"/>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnSetFrequency">
+              <property name="text">
+               <string>Set Frequency</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="Line" name="line">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>Color Gain Adjust</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSlider" name="sliderBase">
+              <property name="toolTip">
+               <string>Base display level</string>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="value">
+               <number>30</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSlider" name="sliderContrast">
+              <property name="toolTip">
+               <string>Contrast</string>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="value">
+               <number>70</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblGradient">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="scaledContents">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="Line" name="line_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>Waterfall Speed</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSlider" name="sliderSpeed">
+              <property name="maximum">
+               <number>4</number>
+              </property>
+              <property name="pageStep">
+               <number>1</number>
+              </property>
+              <property name="value">
+               <number>2</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="Line" name="line_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="cbInvert">
+              <property name="text">
+               <string>Invert Scale</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="cbAGC">
+              <property name="text">
+               <string>Slow AGC</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="cbCapture1">
+              <property name="text">
+               <string>Enable Capture 1</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="cbCapture2">
+              <property name="text">
+               <string>Enable Capture 2</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblImage">
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="pixmap">
+           <pixmap>WFTest.jpg</pixmap>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnStart">
+          <property name="text">
+           <string>Start</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>903</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuInput">
+    <property name="title">
+     <string>Input</string>
+    </property>
+    <addaction name="actionSelect_Input"/>
+   </widget>
+   <widget class="QMenu" name="menuCapture">
+    <property name="title">
+     <string>Capture</string>
+    </property>
+    <addaction name="actionCapture_Settings"/>
+   </widget>
+   <widget class="QMenu" name="menuMode">
+    <property name="title">
+     <string>Mode</string>
+    </property>
+    <addaction name="actionFull_Speed"/>
+    <addaction name="actionQRSS3"/>
+    <addaction name="actionQRSS10"/>
+    <addaction name="actionQRSS20"/>
+    <addaction name="actionQRSS30"/>
+    <addaction name="actionQRSS60"/>
+    <addaction name="actionQRSS120"/>
+   </widget>
+   <widget class="QMenu" name="menuPreferences">
+    <property name="title">
+     <string>Preferences</string>
+    </property>
+    <addaction name="actionWaterfall_Note"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuInput"/>
+   <addaction name="menuCapture"/>
+   <addaction name="menuMode"/>
+   <addaction name="menuPreferences"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionSelect_Input">
+   <property name="text">
+    <string>Select Input</string>
+   </property>
+  </action>
+  <action name="actionCapture_Settings">
+   <property name="text">
+    <string>Capture Settings</string>
+   </property>
+  </action>
+  <action name="actionQRSS3">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>QRSS3</string>
+   </property>
+  </action>
+  <action name="actionQRSS10">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>QRSS10</string>
+   </property>
+  </action>
+  <action name="actionQRSS20">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>QRSS20</string>
+   </property>
+  </action>
+  <action name="actionQRSS30">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>QRSS30</string>
+   </property>
+  </action>
+  <action name="actionQRSS60">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>QRSS60</string>
+   </property>
+  </action>
+  <action name="actionQRSS120">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>QRSS120</string>
+   </property>
+  </action>
+  <action name="actionFull_Speed">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Full Speed</string>
+   </property>
+  </action>
+  <action name="actionWaterfall_Note">
+   <property name="text">
+    <string>Waterfall Note</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
