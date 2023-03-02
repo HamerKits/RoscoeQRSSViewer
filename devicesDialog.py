@@ -1,3 +1,7 @@
+#Author: John Hamer
+#Copyright: 2023
+#License: MIT License - See LICENSE.md
+
 from PySide2 import QtWidgets
 import ui.devicesDialog_ui
 import input.audio

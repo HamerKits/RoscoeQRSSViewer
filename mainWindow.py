@@ -1,3 +1,7 @@
+#Author: John Hamer
+#Copyright: 2023
+#License: MIT License - See LICENSE.md
+
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtGui import QPixmap, QPainter, qRgb
 from PySide2.QtCore import Qt, QTimer
@@ -25,7 +29,7 @@ class form(QtWidgets.QMainWindow, ui.mainWindow_ui.Ui_MainWindow):
         self.setupUi(self)  #setup user interface
         self.settings = settings.settings() #read settings file
         self.devicesDialog = devicesDialog.form()   #make devices dialog
-        self.captureSettings = captureSettings.form()   #make capture settings form
+        self.captureSettings = captureSettings.form(self.settings)   #make capture settings form
         self.setWindowTitle("Roscoe QRSS Viewer V" + self.version)  #set the title
 
         #set widget callbacks
@@ -87,8 +91,8 @@ class form(QtWidgets.QMainWindow, ui.mainWindow_ui.Ui_MainWindow):
 
         self.running = False    #not running yet
         self.setFrequencyBox()  #set frequency box initial values
-        self.imageTimer.start(200)
-        self.newAudioData = False
+        self.imageTimer.start(200)  #image update timer
+        self.newAudioData = False   #no audio data on startup
 
         #setup mode checkboxes
         self.modeGroup = QActionGroup(self)
@@ -123,6 +127,18 @@ class form(QtWidgets.QMainWindow, ui.mainWindow_ui.Ui_MainWindow):
             self.actionFull_Speed.setChecked(True)
         self.setMode()
 
+        #set remaining states and make state monitoring variables
+        self.cbInvertChecked = self.settings.get("cbInvertChecked", "False")
+        self.cbInvert.setChecked(self.cbInvertChecked == "True")
+        self.cbAGCChecked = self.settings.get("cbAGCChecked", "True")
+        self.cbAGC.setChecked(self.cbAGCChecked == "True")
+        self.sliderBaseValue = self.settings.get("sliderBaseValue", "20")
+        self.sliderBase.setValue(int(self.sliderBaseValue))
+        self.sliderContrastValue = self.settings.get("sliderContrastValue", "80")
+        self.sliderContrast.setValue(int(self.sliderContrastValue))
+        self.sliderSpeedValue = self.settings.get("sliderSpeedValue", "2")
+        self.sliderSpeed.setValue(int(self.sliderSpeedValue))
+
     def editNote(self):
         text, ok = QInputDialog.getText(self, 'Waterfall Note', 'Enter a note to display on the waterfall screen', text=self.notes)
         if ok:
@@ -136,9 +152,9 @@ class form(QtWidgets.QMainWindow, ui.mainWindow_ui.Ui_MainWindow):
         if (self.running == True):  #see if running when closed
             self.audio.stopStream() #stop stream
         self.audio.terminate()  #terminate audio
-        self.devicesDialog.close()
-        self.captureSettings.close()
-        event.accept()
+        self.devicesDialog.close()  #close any open dialogs
+        self.captureSettings.close()    #close any open dialogs
+        event.accept()  #accept close event
 
     def btnConnect_callback(self):
         if (self.running == False): #see if running
@@ -160,11 +176,9 @@ class form(QtWidgets.QMainWindow, ui.mainWindow_ui.Ui_MainWindow):
             self.fft.clearBuffer()  #clear buffer for next start
 
     def capture1(self):
-        print ("saving capture1 ", self.captureSettings.getCapturePath(0))
         self.waterfall.saveWaterfall(self.captureSettings.getCapturePath(0)) #save waterfall image
 
     def capture2(self):
-        print ("saving capture2 ", self.captureSettings.getCapturePath(1))
         self.waterfall.saveWaterfall(self.captureSettings.getCapturePath(1)) #save waterfall image
 
     def btnSetFrequency_callback(self):
@@ -359,3 +373,19 @@ class form(QtWidgets.QMainWindow, ui.mainWindow_ui.Ui_MainWindow):
             if (self.capture2Timer.isActive() == True): #see if timer is running
                 self.capture2Timer.stop()   #stop the timer
 
+        #update settings
+        if (self.cbInvertChecked != str(self.cbInvert.isChecked())):    #see if checkbox changed
+            self.cbInvertChecked = str(self.cbInvert.isChecked())   #update monitor
+            self.settings.set("cbInvertChecked", self.cbInvertChecked) #update setting
+        if (self.cbAGCChecked != str(self.cbAGC.isChecked())):    #see if checkbox changed
+            self.cbAGCChecked = str(self.cbAGC.isChecked())   #update monitor
+            self.settings.set("cbAGCChecked", self.cbAGCChecked) #update setting
+        if (self.sliderBaseValue != str(self.sliderBase.value())):    #see if checkbox changed
+            self.sliderBaseValue = str(self.sliderBase.value())   #update monitor
+            self.settings.set("sliderBaseValue", self.sliderBaseValue) #update setting
+        if (self.sliderContrastValue != str(self.sliderContrast.value())):    #see if checkbox changed
+            self.sliderContrastValue = str(self.sliderContrast.value())   #update monitor
+            self.settings.set("sliderContrastValue", self.sliderContrastValue) #update setting
+        if (self.sliderSpeedValue != str(self.sliderSpeed.value())):    #see if checkbox changed
+            self.sliderSpeedValue = str(self.sliderSpeed.value())   #update monitor
+            self.settings.set("sliderSpeedValue", self.sliderSpeedValue) #update setting

@@ -1,3 +1,7 @@
+#Author: John Hamer
+#Copyright: 2023
+#License: MIT License - See LICENSE.md
+
 import numpy
 from PySide2.QtGui import QPixmap, QPainter, qRgb, QImage, QFont
 from PySide2.QtCore import Qt

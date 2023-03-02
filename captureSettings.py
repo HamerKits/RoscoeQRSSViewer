@@ -1,20 +1,26 @@
+#Author: John Hamer
+#Copyright: 2023
+#License: MIT License - See LICENSE.md
+
 from PySide2 import QtWidgets
 from PySide2.QtWidgets import QFileDialog, QMessageBox
 import ui.captureSettings_ui
 import os
+import settings
 
 class form(QtWidgets.QDialog, ui.captureSettings_ui.Ui_Dialog):
-    def __init__(self):
+    def __init__(self, settings):
         super(form, self).__init__()
         self.setupUi(self)  #setup user interface
+        self.settings = settings
         self.btnBrowse.clicked.connect(self.selectFolder)
         self.cbCapture.addItem("Capture 1") #add caputre 1 to combo box
         self.cbCapture.addItem("Capture 2") #add caputre 1 to combo box
         self.cbCapture.activated.connect(self.updateSettings)
-        self.captureFolder = [os.path.expanduser("~"), os.path.expanduser("~")]
-        self.imageName = ["Capture", "Capture"]
-        self.captureInterval = [30, 30]
-        self.indexEnabled = [True, False]
+        self.captureFolder = [self.settings.get("capture1Path", os.path.expanduser("~")), self.settings.get("capture2Path", os.path.expanduser("~"))]
+        self.imageName = [self.settings.get("capture1ImageName", "Capture"), self.settings.get("capture2ImageName", "Capture")]
+        self.captureInterval = [int(self.settings.get("capture1Interval", "30")), int(self.settings.get("capture2Interval", "30"))]
+        self.indexEnabled = [self.settings.get("capture1IndexEnabled", "True") == "True", self.settings.get("capture2IndexEnabled", "False") == "True"]
 
         #set initial textbox values
         self.txtImageName.setText(self.imageName[0])
@@ -54,17 +60,30 @@ class form(QtWidgets.QDialog, ui.captureSettings_ui.Ui_Dialog):
             self.imageName[0] = self.imageNameTemp[0]
             self.captureInterval[0] = self.captureIntervalTemp[0]
             self.indexEnabled[0] = self.indexEnabledTemp[0] 
+
+            #update settings file
+            self.settings.set("capture1Path", self.captureFolder[0])
+            self.settings.set("capture1ImageName", self.imageName[0])
+            self.settings.set("capture1Interval", str(self.captureInterval[0]))
+            self.settings.set("capture1IndexEnabled", str(self.indexEnabled[0]))
         if (self.changed[1] == True):    #see if need to update capture 2
             self.captureFolder[1] = self.captureFolderTemp[1]
             self.imageName[1] = self.imageNameTemp[1]
             self.captureInterval[1] = self.captureIntervalTemp[1]
             self.indexEnabled[1] = self.indexEnabledTemp[1] 
 
+            #update settings file
+            self.settings.set("capture2Path", self.captureFolder[1])
+            self.settings.set("capture2ImageName", self.imageName[1])
+            self.settings.set("capture2Interval", str(self.captureInterval[1]))
+            self.settings.set("capture2IndexEnabled", str(self.indexEnabled[1]))
+ 
         super(form, self).accept()  #continue closing dialog
 
     def selectFolder(self):
-        folder = QFileDialog.getExistingDirectory(self, 'Select Folder', directory = self.captureFolderTemp[self.cbCapture.currentIndex()])
-        self.captureFolderTemp[self.cbCapture.currentIndex()] = folder  #set folder
+        folder = QFileDialog.getExistingDirectory(self, 'Select Folder', dir = self.captureFolderTemp[self.cbCapture.currentIndex()])
+        if(folder != ""):   #don't update if pressed cancel
+            self.captureFolderTemp[self.cbCapture.currentIndex()] = folder  #set folder
         self.lblFolder.setText(self.captureFolderTemp[self.cbCapture.currentIndex()])   #update folder label
 
     def checkAndStoreSettings(self, index): #error check for invalid entries

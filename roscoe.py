@@ -1,3 +1,7 @@
+#Author: John Hamer
+#Copyright: 2023
+#License: MIT License - See LICENSE.md
+
 import sys
 from PySide2.QtWidgets import QApplication
 import mainWindow
