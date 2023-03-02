@@ -1,3 +1,7 @@
+#Author: John Hamer
+#Copyright: 2023
+#License: MIT License - See LICENSE.md
+
 import pyaudio
 
 FORMAT = pyaudio.paInt16
