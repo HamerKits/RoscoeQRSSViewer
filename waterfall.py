@@ -65,11 +65,19 @@ class waterfall():
     def addData(self, data, start, base, contrast, AGC): #callback with data
         data = data[start:(start + self.height)]
         
+        #data = numpy.clip(data, 0, numpy.median(data) * 10)    #int((numpy.median(data)* 10))) #clip high values
+        data = 20 * numpy.log10(abs(data))
+ 
+        data = numpy.clip(data, -60, numpy.amax(data))  #clip to -60dBm
+        if (numpy.amin(data) < 0):
+            data -= numpy.amin(data)    #make data positive
+
         #AGC
-        correction = numpy.amax(data) / 65535   #calculate correction factor for 0 to 65535
+        #correction = numpy.amax(data) / 65535   #calculate correction factor for 0 to 65535
+        correction = (numpy.amin(data) + (numpy.median(data) - numpy.amin(data)) * 4) / 65535
         if (correction == 0):
             correction = 1
-        
+
         if (self.agcRunning == False):
             self.AGC = correction   #set correction
             self.agcRunning = True
